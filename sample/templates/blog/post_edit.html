@@ -1,7 +1,9 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <h1>New post</h1>
+    <a class="btn btn-default" href=" {% url 'post_detail' form.instance.pk %}"><span class="glyphicon glyphicon-step-backward"></span></a>
+    <form method="POST" action="{% url 'post_delete' form.instance.pk %}">{% csrf_token %}<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-trash"></span></button></form>
+    <h1>Edit</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>

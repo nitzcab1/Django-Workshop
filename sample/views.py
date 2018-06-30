@@ -27,12 +27,14 @@ def post_new(request):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form})
+    return render(request, 'blog/post_new.html', {'form': form})
 
 def post_edit(request, pk):
+    print(pk)
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)
+        print (form)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -42,3 +44,25 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+# def post_delete(request, pk):
+    
+#     return redirect('post_list')
+def post_delete(request, pk):
+    print(request.method)
+    new_to_delete = get_object_or_404(Post, pk=pk)
+    #+some code to check if this object belongs to the logged in user
+    if request.method == 'POST':
+        new_to_delete.delete()
+        return redirect('post_list') # wherever to go after deleting
+
+        # print('form',form)
+        # if form.is_valid(): # checks CSRF
+        #     new_to_delete.delete()
+        #     return HttpResponseRedirect("/") # wherever to go after deleting
+        
+    else:
+        form = PostForm(instance=new_to_delete)
+
+    template_vars = {'form': form}
+    return render(request, 'blog/post_edit.html', template_vars)
