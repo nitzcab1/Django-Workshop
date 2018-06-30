@@ -6,7 +6,7 @@
         <div>
              <a class="btn btn-default" href="{% url 'post_list' %}"><span class="glyphicon glyphicon-step-backward"></span></a>
              <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-        </div>  
+        </div>
         {% endif %}
 
         {% if post.published_date %}
